@@ -1,0 +1,67 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/home">
+      <img src="/assets/images/Restaurant-Logo-PNG-Free-Image.png" style="height: 50px;" alt="logo"/>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/branches" routerLinkActive="active">Branches</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/payment-details" routerLinkActive="active">Payment</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/meals" routerLinkActive="active">Meals</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/users" routerLinkActive="active">Users</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/order" routerLinkActive="active">Order</a>
+        </li>
+      </ul>
+
+      <form class="d-flex ms-auto" (ngSubmit)="onSearch()">
+        <input [(ngModel)]="searchTerm" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <!-- Conditionally show "Hello, User" if logged in -->
+        <li class="nav-item" *ngIf="isLoggedIn()">
+          <span class="nav-link" style="cursor: pointer;">Hello, {{ userName }}</span> <!-- Added cursor style -->
+        </li>
+
+        <!-- Show "Login" when not logged in -->
+        <li class="nav-item" *ngIf="!isLoggedIn()">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active" style="cursor: pointer;">Login</a> <!-- Ensure cursor shows -->
+        </li>
+
+        <!-- Show "Logout" when logged in -->
+        <li class="nav-item" *ngIf="isLoggedIn()">
+          <a class="nav-link" (click)="onLogout()" routerLink="/login" style="cursor: pointer;">Logout</a> <!-- Added cursor style -->
+        </li>
+
+        <!-- Register link -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/register" routerLinkActive="active" style="cursor: pointer;">Register</a> <!-- Ensure cursor shows -->
+        </li>
+        <!-- Button to display order count, only if logged in -->
+
+      </ul>
+       <!-- Order button with count -->
+       <button class="btn btn-outline-success ms-3" *ngIf="isLoggedIn()" (click)="goToOrderConfirmation()">
+        <i class="fa fa-shopping-cart"></i>
+        <span class="badge bg-danger">{{ orderCount }}</span>
+      </button>
+
+      <!-- Search form and other nav items -->
+    </div>
+  </div>
+</nav>

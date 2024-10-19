@@ -1,0 +1,92 @@
+<div class="container row">
+  <div class="col-md-12">
+    <form [formGroup]="orderForm" (ngSubmit)="submitOrder()">
+      <div class="row">
+        <!-- Branch Selection -->
+        <div class="form-group mb-3 col-lg-4 col-md-12">
+          <label for="branchId" class="form-label">Select Branch</label>
+          <select id="branchId" class="form-select" formControlName="branchId">
+            <option *ngFor="let branch of branches" [value]="branch.id">{{ branch.name }}</option>
+          </select>
+          <div *ngIf="orderForm.controls['branchId'].touched && orderForm.controls['branchId'].invalid" class="text-danger">
+            Branch is required.
+          </div>
+        </div>
+
+        <!-- Number of Guests -->
+        <div class="form-group mb-3 col-lg-4 col-md-12">
+          <label for="numberOfGuests" class="form-label">Number of Guests</label>
+          <input type="number" id="numberOfGuests" class="form-control" formControlName="numberOfGuests" />
+          <div *ngIf="orderForm.controls['numberOfGuests'].touched && orderForm.controls['numberOfGuests'].invalid" class="text-danger">
+            Number of guests is required.
+          </div>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="form-group mb-3 col-lg-4 col-md-12">
+          <label for="phoneNumber" class="form-label">Phone Number</label>
+          <input type="text" id="phoneNumber" class="form-control" formControlName="phoneNumber" />
+          <div *ngIf="orderForm.controls['phoneNumber'].touched && orderForm.controls['phoneNumber'].invalid" class="text-danger">
+            Valid phone number is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal Selection -->
+      <div class="form-group mb-3">
+        <label for="selectedMealIds" class="form-label">Select Meals</label>
+        <div id="selectedMealIds" class="row">
+          <div *ngFor="let meal of filteredMeals  " class="col-md-6 col-lg-4 mb-3">
+            <div class="card h-100 meal-card">
+              <img
+                [src]="'https://localhost:44314' + meal.image"
+                alt="{{ meal.name }}"
+                class="img-fluid"
+                style="height: 150px; object-fit: cover;"
+              />
+              <div class="card-body text-center">
+                <h5>{{ meal.name }}</h5>
+                <p>{{ meal.price | currency:'USD' }}</p>
+
+                <button
+                  class="btn"
+                  [ngClass]="{
+                    'btn-success': isMealSelected(meal.id),
+                    'btn-outline-primary': !isMealSelected(meal.id)
+                  }"
+                  type="button"
+                  (click)="onMealSelectionChange(meal)"
+                >
+                  {{ isMealSelected(meal.id) ? 'Remove' : 'Add' }} to Cart
+                </button>
+                <button (click)="goToOrderDetails(meal.id)" class="btn btn-info">Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Meal validation -->
+        <div *ngIf="selectedMealIdsFormArray.invalid && selectedMealIdsFormArray.touched" class="text-danger mt-2">
+          Please select at least one meal.
+        </div>
+      </div>
+
+      <!-- Total Price -->
+      <div class="form-group mb-3">
+        <label>Total Price: {{ totalPrice | currency:'USD' }}</label>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary" [disabled]="orderForm.invalid || isSubmitting">
+        Submit Order
+      </button>
+      <!-- New 'Details' Button -->
+
+    </form>
+
+    <!-- Admin-only Button for Routing -->
+    <button *ngIf="isAdmin" class="btn btn-secondary mt-3" (click)="goToOrdersPage()">
+      View All Orders (Admin)
+    </button>
+  </div>
+</div>

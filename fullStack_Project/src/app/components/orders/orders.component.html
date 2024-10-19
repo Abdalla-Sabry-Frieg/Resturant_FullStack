@@ -1,0 +1,38 @@
+<div class="container">
+  <h2>All Table Bookings</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Booking Time</th>
+        <th>Total Price</th>
+        <th>Branch Name</th>
+        <th>Number of Guests</th>
+        <th>Phone Number</th>
+        <th>Meals</th>
+        <th>Actions</th> <!-- Add actions column for delete -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let booking of bookings">
+        <td>{{ booking.firstName }}</td>
+        <td>{{ booking.bookingDate | date: 'short' }}</td>
+        <td>{{ booking.totalPrice | currency }}</td>
+        <td>{{ booking.branchName }}</td>
+        <td>{{ booking.numberOfGuests }}</td>
+        <td>{{ booking.phoneNumber }}</td>
+        <td>
+          <ul>
+            <li *ngFor="let meal of booking.meals">{{ meal }}</li>
+          </ul>
+        </td>
+        <td>
+          <!-- Delete Icon (Bootstrap Trash Icon or FontAwesome) -->
+          <button class="btn btn-danger" (click)="deleteBooking(booking.id)">
+            <i class="bi bi-trash"></i> <!-- Bootstrap icon -->
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,101 @@
+<div class="container mt-5 my-5">
+  <h2 class="text-center mb-4">Payment Details</h2>
+
+  <div class="row">
+    <!-- Payment Form Part -->
+    <div class="col-6">
+      <h4>{{ selectedPaymentDetail ? 'Update Payment Detail' : 'Add Payment Detail' }}</h4>
+      <form [formGroup]="paymentForm" (ngSubmit)="submitForm()">
+        <!-- Card Owner Name -->
+        <div class="mb-3">
+          <label for="cardOwnerName" class="form-label">Card Owner Name</label>
+          <input
+            type="text"
+            id="cardOwnerName"
+            formControlName="cardOwnerName"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': isFieldInvalid('cardOwnerName') }" />
+          <small *ngIf="isFieldInvalid('cardOwnerName')" class="text-danger">
+            {{ getFieldError('cardOwnerName') }}
+          </small>
+        </div>
+
+        <!-- Card Number -->
+        <div class="mb-3">
+          <label for="cardNumber" class="form-label">Card Number</label>
+          <input
+            type="text"
+            id="cardNumber"
+            formControlName="cardNumber"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': isFieldInvalid('cardNumber') }" />
+          <small *ngIf="isFieldInvalid('cardNumber')" class="text-danger">
+            {{ getFieldError('cardNumber') }}
+          </small>
+        </div>
+
+        <!-- Expiration Date -->
+        <div class="mb-3">
+          <label for="expirationDate" class="form-label">Expiration Date (MM/YY)</label>
+          <input
+            type="text"
+            id="expirationDate"
+            formControlName="expirationDate"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': isFieldInvalid('expirationDate') }" />
+          <small *ngIf="isFieldInvalid('expirationDate')" class="text-danger">
+            {{ getFieldError('expirationDate') }}
+          </small>
+        </div>
+
+        <!-- Security Code -->
+        <div class="mb-3">
+          <label for="securityCode" class="form-label">Security Code</label>
+          <input
+            type="text"
+            id="securityCode"
+            formControlName="securityCode"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': isFieldInvalid('securityCode') }" />
+          <small *ngIf="isFieldInvalid('securityCode')" class="text-danger">
+            {{ getFieldError('securityCode') }}
+          </small>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary w-100">
+          {{ selectedPaymentDetail ? 'Update Payment Detail' : 'Add Payment Detail' }}
+        </button>
+      </form>
+    </div>
+
+    <div class="col-6">
+      <h4 class="mb-3">Saved Payment Details</h4>
+
+      <div class="card mb-3 bg-body-secondary" *ngFor="let detail of paymentDetails">
+        <div class="card-body">
+          <!-- Card Header -->
+          <h5 class="card-title">{{ detail.cardOwnerName }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card Number: {{ detail.cardNumber }}</h6>
+
+          <!-- Card Content -->
+          <p class="card-text">
+            <strong>Expiration Date:</strong> {{ detail.expirationDate }} <br>
+            <strong>Security Code:</strong> {{ detail.securityCode }}
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="d-flex justify-content-between">
+            <button (click)="editPaymentDetail(detail)" class="btn btn-warning btn-sm">
+              <i class="fas fa-edit"></i> Edit
+            </button>
+            <button (click)="deletePaymentDetail(detail.paymentDetailId)" class="btn btn-danger btn-sm">
+              <i class="fas fa-trash"></i> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,84 @@
+<div class="container row">
+  <div class="col-12">
+    <h2>User Management</h2>
+
+    <!-- Users Table -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Roles</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.email }}</td>
+          <td>{{ user.firstName }} {{ user.lastName }}</td>
+          <td>{{ user.phoneNumber }}</td>
+          <td>{{ user.roles.join(', ') }}</td>
+          <td>
+            <button (click)="openRoleModal(user)" class="btn btn-primary">Manage Roles</button>
+            <button (click)="deleteUser(user.id)" class="btn btn-danger">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+<hr class="mt-5 mb-5">
+    <!-- Role Management Section -->
+    <h3>Manage Roles</h3>
+    <div class="mb-3">
+      <input [(ngModel)]="newRoleName" placeholder="Enter new role name" class="form-control" />
+      <button (click)="createRole()" class="btn btn-success mt-2">Create Role</button>
+    </div>
+
+    <!-- Roles Table -->
+    <table class="table table-striped mt-4">
+      <thead>
+        <tr>
+          <th>Role Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let role of roles">
+          <td>{{ role.name }}</td>
+          <td>
+            <button (click)="updateRole(role)" class="btn btn-warning mx-3">
+              <i class="bi bi-pencil"></i> Edit
+            </button>
+            <button (click)="deleteRole(role.name)" class="btn btn-danger">
+              <i class="bi bi-trash"></i> Remove
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Modal for managing user roles -->
+    <div id="roleModal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Manage Roles for {{ selectedUser?.email }}</h5>
+            <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div *ngFor="let role of roles">
+              <!-- Checkbox for each role, toggle assign/remove based on checked state -->
+              <input type="checkbox"
+                     [checked]="selectedUser?.roles.includes(role.name)"
+                     (change)="toggleRole(role.name, $event)">
+              {{ role.name }}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+body {
+  padding-top: 56px; /* Adjust padding for fixed navbar */
+}
+
+.footer {
+  background-color: #f8f9fa;
+  text-align: center;
+}

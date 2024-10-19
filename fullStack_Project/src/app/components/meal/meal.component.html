@@ -1,0 +1,78 @@
+<div class="container mt-5">
+  <div class="row">
+    <!-- Meals Form Section -->
+    <div class="col-12 col-md-12 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h4 class="card-title mb-0">{{ selectedMeal ? 'Edit Meal' : 'Add New Meal' }}</h4>
+        </div>
+        <div class="card-body">
+          <!-- Form for Creating or Updating Meals -->
+          <form [formGroup]="mealForm" (ngSubmit)="createOrUpdateMeal()">
+            <!-- Meal Name Input Field -->
+            <div class="mb-3">
+              <label for="name" class="form-label">Meal Name</label>
+              <input type="text" id="name" formControlName="name" class="form-control" placeholder="Enter meal name" />
+              <div *ngIf="mealForm.get('name')?.invalid && (mealForm.get('name')?.touched || mealForm.get('name')?.dirty)" class="text-danger">
+                Meal name is required.
+              </div>
+            </div>
+
+            <!-- Meal Price Input Field -->
+            <div class="mb-3">
+              <label for="price" class="form-label">Price</label>
+              <input type="number" id="price" formControlName="price" class="form-control" placeholder="Enter meal price" />
+              <div *ngIf="mealForm.get('price')?.invalid && (mealForm.get('price')?.touched || mealForm.get('price')?.dirty)" class="text-danger">
+                Valid price is required.
+              </div>
+            </div>
+
+            <!-- Meal Image Upload Input -->
+            <div class="mb-3">
+              <label for="image" class="form-label">Image</label>
+              <input type="file" id="image" (change)="onImageSelected($event)" class="form-control" />
+              <img *ngIf="previewImage" [src]="previewImage" class="img-thumbnail mt-3" width="200" alt="Selected Meal Image" />
+            </div>
+
+            <!-- Form Buttons -->
+            <div class="d-flex justify-content-between">
+              <button type="submit" class="btn btn-success">{{ selectedMeal ? 'Update Meal' : 'Add Meal' }}</button>
+              <button type="button" class="btn btn-secondary" (click)="resetForm()">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Saved Meals Section -->
+    <div class="col-12 col-md-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-info text-white">
+          <h4 class="card-title mb-0">Saved Meals</h4>
+        </div>
+        <div class="card-body">
+          <!-- List of saved meals -->
+          <ul class="list-group">
+            <li *ngFor="let meal of meals" class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>{{ meal.name }}</strong> - ${{ meal.price }}
+              </div>
+              <div class="d-flex align-items-center">
+                <!-- Meal Image -->
+                <img [src]="'https://localhost:44314' + meal.image" class="img-thumbnail mx-3" width="50" alt="{{ meal.name }}" />
+
+                <!-- Edit and Delete Buttons with Icons -->
+                <button (click)="selectMeal(meal)" class="btn btn-sm btn-warning mx-1">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button (click)="deleteMeal(meal.id)" class="btn btn-sm btn-danger mx-1">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

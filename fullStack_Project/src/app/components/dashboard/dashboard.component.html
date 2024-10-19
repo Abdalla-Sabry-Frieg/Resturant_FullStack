@@ -1,0 +1,74 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Admin Dashboard</h2>
+
+  <!-- Dashboard Stats Cards -->
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card bg-primary text-white text-center mb-4">
+        <div class="card-body">
+          <h3>{{ totalBookings }}</h3>
+          <p>Total Bookings</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-success text-white text-center mb-4">
+        <div class="card-body">
+          <h3>{{ totalMeals }}</h3>
+          <p>Total Meals</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-warning text-white text-center mb-4">
+        <div class="card-body">
+          <h3>{{ totalUsers }}</h3>
+          <p>Total Users</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-info text-white text-center mb-4">
+        <div class="card-body">
+          <h3>{{ totalRevenue | currency:'USD' }}</h3>
+          <p>Total Revenue</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Bookings Table -->
+  <div class="card">
+    <div class="card-header bg-dark text-white">
+      Recent Bookings
+    </div>
+    <div class="card-body">
+      <table class="table table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th>#</th>
+            <th>Booking Date</th>
+            <th>Customer</th>
+            <th>Guests</th>
+            <th>Total Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let booking of recentBookings; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ booking.bookingDate | date:'short' }}</td>
+            <td>{{ booking.customerName }}</td>
+            <td>{{ booking.numberOfGuests }}</td>
+            <td>{{ booking.totalPrice | currency:'USD' }}</td>
+            <td>
+              <button class="btn btn-sm btn-danger" (click)="deleteBooking(booking.id)">
+                <i class="fas fa-trash-alt"></i> Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="container mt-5">
+  <!-- Meal Details Header -->
+  <div class="row">
+    <div class="col-12 text-center">
+      <h2 class="display-4">{{ meal?.name }}</h2>
+    </div>
+  </div>
+
+  <!-- Meal Details Content -->
+  <div class="row mt-4">
+    <!-- Meal Image -->
+    <div class="col-md-6 text-center">
+      <img *ngIf="meal?.image"  [src]="'https://localhost:44314' + meal?.image"
+          class="img-fluid rounded" style="max-width: 400px;" alt="">
+      <p *ngIf="!meal?.image" class="text-muted">No image available</p>
+    </div>
+
+    <!-- Meal Information -->
+    <div class="col-md-6">
+      <ul class="list-group">
+        <li class="list-group-item">
+          <strong>Name:</strong> {{ meal?.name }}
+        </li>
+        <li class="list-group-item">
+          <strong>Price:</strong> {{ meal?.price | currency:'USD' }}
+        </li>
+      </ul>
+
+      <!-- Back Button -->
+      <div class="mt-4">
+        <button class="btn btn-secondary" (click)="goBack()">Back</button>
+      </div>
+    </div>
+  </div>
+</div>

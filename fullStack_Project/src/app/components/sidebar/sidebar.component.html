@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <div class="row flex-grow-1">
+    <!-- Toggle button for small screens -->
+    <button id="toggleButton" class="btn btn-primary d-md-none mb-3" type="button" (click)="toggleSidebar()">
+      <i class="fas fa-bars"></i> Menu
+    </button>
+
+    <!-- Sidebar -->
+    <nav id="sidebar" class="col-md-3 col-lg-2 bg-light sidebar" [class.hidden]="isSidebarHidden">
+      <div class="position-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="/dashboard">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/orders">Orders</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/meals">Meals</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/branches">Branches</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/users">Users</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+
+  </div>
+</div>
